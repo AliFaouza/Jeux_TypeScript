@@ -1,56 +1,60 @@
 import 'colorts/lib/string';
-import { Player, Enenmy } from './interfaces';
+import { Personnage } from './interfaces';
+import { exit } from 'process';
 const readline = require('readline-sync');
 
-function attack (enenmy:Enenmy, player:Player) {
-   let Fight = 0;
-   for (let i = 0; i < 10; i++) {
-    while (enenmy.hp !==0 || player.hp !== 0) {
-      console.log(`=== Fight ${Fight += 1} ===`);
+function attack() {
 
-      let HP: string = 'HP: '; 
+}
+
+function heal(player: Personnage){
+  let maxHpPlayer: number = player.hp;
+  player.hp += maxHpPlayer/ 2;
+  if( player.hp > maxHpPlayer){
+      player.hp = maxHpPlayer;
+  }
+}
+
+function condition(enenmy:Personnage, player:Personnage) {
+   let Fight = 0;
+   let maxHpMonster: number = enenmy.hp;
+   let maxHpPlayer: number = player.hp;
+   let floor: number = 1;
+   
+    while (floor < 10) {
+      console.log(`${floor}`);
+      console.log(`=== Fight ${Fight += 1} ===`);
       let nbr: number = 0;
  
      // Affichage de l'enemie
      console.log(`${enenmy.name}`.red);
-     for (let j=0; j < enenmy.hp; j++) {
-       //Affichage des vies
-        HP += 'I';     
-        
-     }
- 
-     console.log(`${HP}  ${enenmy.hp} / 30`);
+     console.log(`HP : ${'I'.repeat(enenmy.hp)} ${'_'.repeat(maxHpMonster - enenmy.hp)}  ${enenmy.hp} / 30`);
+
       //Affichage du nom du joueur
-      console.log(`${player.name}`.green); 
-      for (let k = 0; k <player.hp; k++) {
-       HP += 'I';    
-       
-      }
-      console.log(`${HP}  ${player.hp} / 60`);
+     console.log(`${player.name}`.green);
+     console.log(`HP : ${'I'.repeat(player.hp)} ${'_'.repeat(maxHpPlayer - player.hp)} ${player.hp} / 60`);
+
      //  // section d'option Attack / heal
-      console.log('---- Options ----------');
+     console.log('---- Options ----------');
       
       const options = ['Attack', 'Heal'];
       const answer = readline.keyInSelect(options,'');
       
-      console.log(`${nbr += 1}.${options[answer]}`);
+      //console.log(`${nbr += 1}.${options[answer]}`);
       console.log(`You attacked and dealt ${player.str} damages!`)
  
       if (options[answer] === 'Attack') {
-      
        enenmy.hp = enenmy.hp - player.str;
        player.hp = player.hp - enenmy.str;
-       console.log("########-------------#########")
-       console.log(`HP : ${'I'.repeat(player.hp)} ${'_'.repeat(player.hp- player.hp)}`)
        
-       console.log("########-------------#########")
-      console.log(enenmy.hp)
+      } else if (options[answer] === 'Heal') {
+        console.log(heal(player));
       } else{
-        console.log('Dommage!!!!!');
+        exit;
       }
-    }
-     
+    
+     floor++;
    }
  }
 
- export default attack;
+ export default condition;

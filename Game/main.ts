@@ -1,4 +1,4 @@
-import attack from "./hyrule_castle"
+import condition from "../Game/hyrule_castle"
 
 const person = {
     name: 'Link',
@@ -10,4 +10,4 @@ const enenmy = {
     hp: 30, 
     str: 5
 }
-attack(enenmy, person);
+condition(enenmy, person);

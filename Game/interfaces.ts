@@ -1,4 +1,4 @@
-interface Player{
+interface Personnage{
     name: string,
     hp: number,
     str: number
@@ -10,4 +10,4 @@ interface Enenmy{
     str: number
 }
 
-export {Player, Enenmy};
+export {Personnage};
