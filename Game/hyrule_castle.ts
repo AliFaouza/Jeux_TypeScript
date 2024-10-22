@@ -1,60 +1,71 @@
 import 'colorts/lib/string';
 import { Personnage } from './interfaces';
-import { exit } from 'process';
-const readline = require('readline-sync');
+import { attack, heal, affichVie } from './functions';
 
-function attack() {
-
-}
-
-function heal(player: Personnage){
-  let maxHpPlayer: number = player.hp;
-  player.hp += maxHpPlayer/ 2;
-  if( player.hp > maxHpPlayer){
-      player.hp = maxHpPlayer;
-  }
-}
-
-function condition(enenmy:Personnage, player:Personnage) {
+function game(player:Personnage) {
    let Fight = 0;
-   let maxHpMonster: number = enenmy.hp;
-   let maxHpPlayer: number = player.hp;
    let floor: number = 1;
-   
-    while (floor < 10) {
-      console.log(`${floor}`);
+  
+    while (floor <= 10 && player.hp > 0) {
+      
+      let enenmy = {
+        name: 'Bokoblin',
+        hp: 30, 
+        str: 5,
+        maxHp: 30
+    }
+  while (player.hp > 0 && enenmy.hp > 0) {
+      console.log(`Etage ${floor}`);
       console.log(`=== Fight ${Fight += 1} ===`);
-      let nbr: number = 0;
  
-     // Affichage de l'enemie
-     console.log(`${enenmy.name}`.red);
-     console.log(`HP : ${'I'.repeat(enenmy.hp)} ${'_'.repeat(maxHpMonster - enenmy.hp)}  ${enenmy.hp} / 30`);
+      affichVie(enenmy,player);
+      attack(player, enenmy);
 
-      //Affichage du nom du joueur
-     console.log(`${player.name}`.green);
-     console.log(`HP : ${'I'.repeat(player.hp)} ${'_'.repeat(maxHpPlayer - player.hp)} ${player.hp} / 60`);
-
-     //  // section d'option Attack / heal
-     console.log('---- Options ----------');
-      
-      const options = ['Attack', 'Heal'];
-      const answer = readline.keyInSelect(options,'');
-      
-      //console.log(`${nbr += 1}.${options[answer]}`);
-      console.log(`You attacked and dealt ${player.str} damages!`)
- 
-      if (options[answer] === 'Attack') {
-       enenmy.hp = enenmy.hp - player.str;
-       player.hp = player.hp - enenmy.str;
-       
-      } else if (options[answer] === 'Heal') {
-        console.log(heal(player));
+      if(enenmy.hp > 0){
+        console.log(`${enenmy.name} attacked and dealt ${enenmy.str} damage!`);
+        
+        player.hp -= enenmy.str; 
+        if (player.hp < 0) {
+          player.hp = 0;
+        }
       } else{
-        exit;
+        console.log('Bokoblin died!')
       }
     
-     floor++;
+      }
+      floor++
+      if (floor === 10) {
+        let enenmy = {
+          name: 'Ganon',
+          hp: 150, 
+          str: 20,
+          maxHp: 150
+      }
+      while (player.hp > 0 && enenmy.hp > 0) {
+        console.log(`${enenmy.name} en vue`)
+
+        affichVie(enenmy,player);
+        attack(player, enenmy);
+        if(enenmy.hp > 0){
+          console.log(`${enenmy.name} attacked and dealt ${enenmy.str} damage!`);
+          
+          player.hp -= enenmy.str; 
+          if (player.hp < 0) {
+            player.hp = 0;
+          }
+        }   
+      }
+      if (player.hp === 0){
+        console.log(`Dommage tu as perdu`)
+        return false
+        
+      } else{
+        console.log(`Féliciation!!!!!`)
+        return true
+      }
+     }
+     
    }
  }
 
- export default condition;
+ export default game;
