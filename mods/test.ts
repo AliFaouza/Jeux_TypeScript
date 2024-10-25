@@ -39,7 +39,11 @@ function initGame(player:Personnage) {
         const reponse = readline.keyInYN(`Souhaitez-vous continuer à l'étage N°${floor + 1} ?`);
   
         if (reponse === true) {
+          if (floor === nbrEtage){
+            console.log(`Votre route s\'arrete içi car nous n\'aviez choisi que ${nbrEtage} de combat à faire...`.blue);  
+          }
           floor += 1;
+         
         } else {
           console.log('Orevoir!!!!');
           return false;
