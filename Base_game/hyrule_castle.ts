@@ -18,9 +18,9 @@ function game(player:Personnage) {
       console.log(`******** Etage ${floor} ********\n`.yellow);
       console.log(`=== Fight ${Fight += 1} ===`);
       const answer = affichVie(enemie, player);
-      if (answer === 'Attack') {
+      if (answer === '1' || answer === 'attack') {
         attack(player, enemie);
-      } else {
+      } else if (answer === '2' || answer === 'heal') {
         heal(player);
       }
       affichVie(enemie, player);
@@ -31,21 +31,17 @@ function game(player:Personnage) {
           player.hp = 0;
         }
       } else {
-        console.log(`${enemie.name} Bokoblin died!\n`);
+        console.log(`${enemie.name} died!\n`);
       }
       console.log('********************************************* ');
     }
     let reponse = readline.keyInYN(`Voulez vous monter à l'étage N°${floor + 1} ??`);
-    console.log('tt',reponse)
     if (reponse) {
-      console.log("reponse bien");
       floor += 1;
     } else {
-      console.log("reponse pas bien");
       console.log('Dommage, à bientot!!!!');
       return false;
     }
-    console.log("apres le if avec floor = ",floor);
     if (floor === 10) {
       const boss = getBosses();
       boss.maxHp = boss.hp;
