@@ -18,9 +18,9 @@ function initGame(player:Personnage) {
           console.log(`******** Etage ${floor} ********\n`.yellow);
           console.log(`=== Fight ${Fight += 1} ===`);
           const answer = affichVie(enemie, player);
-          if (answer === 'Attack') {
+          if (answer === '1' || answer === 'attack' ) {
             attack(player, enemie);
-          } else {
+          } else if (answer === '2' || answer === 'heal') {
             heal(player);
           }
           affichVie(enemie, player);
@@ -31,23 +31,24 @@ function initGame(player:Personnage) {
               player.hp = 0;
             }
           } else {
-            console.log('Bokoblin died!\n');
+            console.log(`${enemie.name} died!\n`);
           }
           console.log('********************************************* ');
         }
-        const reponse = readline.keyInYN(`Voulez vous monter à l'étage N°${floor + 1} ??`);
+        const reponse = readline.keyInYN(`Souhaitez-vous continuer à l'étage N°${floor + 1} ?`);
   
         if (reponse === true) {
           floor += 1;
         } else {
-          console.log('Dommage, à bientot!!!!');
+          console.log('Orevoir!!!!');
           return false;
         }
+
         if (floor === 10) {
           const boss = getBosses();
           boss.maxHp = boss.hp;
           while (player.hp > 0 && boss.hp > 0) {
-            console.log(` Dans cette étage vous allez affronter ${boss.name}`);
+            console.log(` À cette étage vous allez affronter ${boss.name}`);
             const answer = affichVie(boss, player);
             if (answer === 'Attack') {
               attack(player, boss);
@@ -64,10 +65,10 @@ function initGame(player:Personnage) {
             }
           }
           if (player.hp === 0) {
-            console.log('Dommage tu as perdu');
+            console.log('Dommage Vous y etiez presque.');
             return false;
           }
-          console.log('Féliciation!!!!!');
+          console.log(`Féliciation, ${boss.str} a etait vaincue !!!!!`);
           return true;
         }
       }
@@ -92,3 +93,4 @@ function game() {
 game()
 
 export default game;
+

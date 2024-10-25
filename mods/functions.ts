@@ -7,11 +7,13 @@ function affichVie(monster: Personnage, player: Personnage) {
 
   console.log(`${player.name}`.green);
   console.log(`HP : ${'I'.repeat(player.hp)} ${'_'.blue.repeat(player.maxHp - player.hp)} ${player.hp} / ${player.maxHp}`);
-  console.log('---- Options ----------');
-  const options = ['Attack', 'Heal'];
-  const answer = readline.keyInSelect(options, '');
+  console.log('---- Options ----------\n');
+  console.log('1. Atttack   2. Heal')
+  const answer = readline.question(``);
+  // const options = ['Attack', 'Heal'];
+  // const answer = readline.keyInSelect(options, '');
 
-  return options[answer];
+  return answer;
 }
 
 function heal(player: Personnage) {
