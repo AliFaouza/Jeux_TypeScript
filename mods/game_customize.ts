@@ -28,14 +28,13 @@ function modeDifficulty(){
 
         boss.hp = boss.hp * 2;
         boss.str = boss.str * 2;
-    } else {
-        console.log('Attention: mode normale choisi par defaut'.blue)
-    } 
+    }
 
     return modeDifficult
 }
 function startGame() {
   const start: boolean = false;
+  var emoji = String.fromCodePoint(0x1F621)
   while(start === false){
     console.log()
     console.log(` 1.START `.bgCyan.dim +   ` 2.QUIT `.bgMagenta +'\n');
@@ -46,8 +45,13 @@ function startGame() {
        
         return  modeDifficulty()
     } else if (answer === 'QUIT' || answer === 'quit' || answer === 'Quit' || answer === '2') {
-        console.log('Dommage à une autre fois alors.......');    
-        return false
+        const reponse = readline.keyInYN(`Êtes-vous sur de vouloir quitter le jeux?`.red); 
+        if (reponse === true) {
+          console.log(`À bientot!!!! ${emoji}`);
+          return false
+        } else {  
+          return modeDifficulty();
+        }    
     } else {
             console.log('error: Vous devez choisir un des choix proposer'.red)
     }
