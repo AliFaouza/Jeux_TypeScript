@@ -18,6 +18,7 @@ function game(player:Personnage) {
       console.log(`******** Etage ${floor} ********\n`.yellow);
       console.log(`=== Fight ${Fight += 1} ===`);
       const answer = affichVie(enemie, player);
+
       if (answer === '1' || answer === 'attack') {
         attack(player, enemie);
       } else if (answer === '2' || answer === 'heal') {
@@ -35,11 +36,12 @@ function game(player:Personnage) {
       }
       console.log('********************************************* ');
     }
+    
     let reponse = readline.keyInYN(`Voulez vous monter à l'étage N°${floor + 1} ??`);
     if (reponse) {
       floor += 1;
     } else {
-      console.log('Dommage, à bientot!!!!');
+      console.log('Orevoir \u{1F44B} ');
       return false;
     }
     if (floor === 10) {
@@ -48,9 +50,9 @@ function game(player:Personnage) {
       while (player.hp > 0 && boss.hp > 0) {
         console.log(` Dans cette étage vous allez affronter ${boss.name}`);
         const answer = affichVie(boss, player);
-        if (answer === 'Attack') {
+        if (answer === '1' || answer === 'attack') {
           attack(player, boss);
-        } else {
+        } else if (answer === '2' || answer === 'heal') {
           heal(player);
         }
         affichVie(boss, player);
@@ -63,10 +65,10 @@ function game(player:Personnage) {
         }
       }
       if (player.hp === 0) {
-        console.log('Dommage tu as perdu');
+        console.log('Dommage Vous y etiez presque \u{1F61E} .');
         return false;
       }
-      console.log('Féliciation!!!!!');
+      console.log(`Féliciation, ${boss.str} a etait vaincue \u{1F38A} \u{1F38A} \u{1F38A} \u{1F38A}`);;
       return true;
     }
   }
